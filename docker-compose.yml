@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+
+  db:
+    image: postgres:16-alpine
+    container_name: taskmanager-db
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: rootpassword
+      POSTGRES_DB: taskdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - task-network
+
+
+  backend:
+    image: taskmanager-backend
+    container_name: taskmanager-backend
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/taskdb
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: rootpassword
+    networks:
+      - task-network
+
+  frontend:
+    image: taskmanager-frontend
+    container_name: taskmanager-frontend
+    restart: always
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+    networks:
+      - task-network
+
+
+networks:
+  task-network:
+    driver: bridge
+
+volumes:
+  postgres_data:

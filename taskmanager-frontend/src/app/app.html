@@ -1,0 +1,34 @@
+<div style="font-family: Arial, Helvetica, sans-serif; max-width: 600px; margin: 40px auto; padding: 20px;">
+  <h2>Mein 80/20 Task-Manager</h2>
+
+  <div style="margin-bottom: 20px;">
+    <input 
+      type="text"
+      [(ngModel)]="newTaskTitle"
+      placeholder="Neuen Task eingeben..."
+      style="padding: 10px; width: 70%; margin-right: 10px;">
+
+    <button (click)="addTask()" style="padding: 10px 20px; cursor: pointer;">
+      Hinzufügen
+    </button>  
+  </div>
+
+  <ul style="list-style-type: none; padding: 0;">
+    @for (task of tasks; track task.id) {
+      <li style="padding: 10px; border-bottom: 1px solid #ccc; display: flex; justify-content: space-between;">
+        <span [style.text-decoration]="task.completed ? 'line-through': 'none'">
+          {{ task.title}}
+        </span>
+
+        @if (!task.completed) {
+          <button (click)="completeTask(task)" style="cursor: pointer;">
+            Erledigt
+          </button>
+        }
+      </li>
+    }
+    @empty{
+      <li>Keine Tasks vorhanden. Zeit für eine Pause!</li>
+    }
+  </ul>
+</div>

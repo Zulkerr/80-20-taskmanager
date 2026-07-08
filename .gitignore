@@ -1,0 +1,15 @@
+# Backend
+taskmanager/build/
+taskmanager/.gradle
+taskmanager/out/
+taskmanager/bin
+
+# Frontend
+taskmanager-frontend/node_modules/
+taskmanager-frontend/dist
+taskmanager-frontend/.angular/
+
+# IDE
+.idea/
+*.iml
+.vscode/
